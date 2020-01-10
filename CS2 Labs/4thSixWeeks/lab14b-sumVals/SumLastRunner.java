@@ -10,7 +10,6 @@ public class SumLastRunner
 	public static void main( String args[] )
 	{
 		Scanner keyboard = new Scanner(System.in);
-		int[] ray = new int[100];
 		System.out.print("Enter a string of integers separated by commas: ");
 		String input = keyboard.nextLine();
 		int nextIndex = 0;
@@ -23,6 +22,19 @@ public class SumLastRunner
 		{
 			input = input.substring(0, input.length() - 1);
 		}
+		int count = 0;
+		for(int i = 0; i < input.length(); i++)
+		{
+			if(input.charAt(i) == ',')
+			{
+				count++;
+			}
+			if(i == input.length() - 1)
+			{
+				count++;
+			}
+		}
+		int[] ray = new int[count];
 		for(int i = 0; i < input.length(); i++)
 		{
 			if(input.charAt(i) == ',')
@@ -31,11 +43,11 @@ public class SumLastRunner
 				lastComma = i;
 				nextIndex++;
 			}
-			if(i == input.length())
+			if(i == input.length() - 1)
 			{
-				ray[99] = Integer.valueOf(input.substring(lastComma + 1, input.length()));
+				ray[count - 1] = Integer.valueOf(input.substring(lastComma + 1, input.length()));
 			}
 		}
-		System.out.println(RaySumLast.go(ray));
+		System.out.println("Sum of numbers is: " + RaySumLast.go(ray));
 	}
 }
