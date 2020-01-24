@@ -15,12 +15,14 @@ public class RomanNumeral
 
 	public RomanNumeral(String str)
 	{
+		number = 0;
 		roman = str;
 	}
 
 	public RomanNumeral(Integer orig)
 	{
 		number = orig;
+		roman = "";
 	}
 
 	public void setNumber(Integer num)
