@@ -22,28 +22,58 @@ public class RomanNumeral
 	{
 		number = 0;
 		roman = str;
+		int i = 0;
+		while (i < roman.length()) //finds number
+		{
+			for (int j = 0; j < LETTERS.length; j++)
+			{
+				if ((i + LETTERS[j].length()) <= roman.length())
+				{
+					if (LETTERS[j].equals(roman.substring(i, i + LETTERS[j].length())))
+					{
+						number += NUMBERS[j];
+						i += LETTERS[j].length();
+						i--;
+						break;
+					}
+				}
+			}
+			i++;
+		}
 	}
 
 	public RomanNumeral(Integer orig)
 	{
 		number = orig;
 		roman = "";
+		for (int i = 0; i < NUMBERS.length; i++) //finds roman numeral
+		{
+			while (NUMBERS[i] <= number)
+			{
+				roman += LETTERS[i];
+				number -= NUMBERS[i];
+			}
+		}
 	}
 
 	//mutators
 	public void setNumber(Integer num)
 	{
 		number = num; //changes number
+		roman = "";
+		for (int i = 0; i < NUMBERS.length; i++) //finds roman numeral
+		{
+			while (NUMBERS[i] <= number)
+			{
+				roman += LETTERS[i];
+				number -= NUMBERS[i];
+			}
+		}
 	}
 
 	public void setRoman(String rom)
 	{
 		roman = rom; //changes roman numeral
-	}
-
-	//returns number from roman numeral
-	public Integer getNumber()
-	{
 		number = 0;
 		int i = 0;
 		while (i < roman.length()) //finds number
@@ -63,21 +93,17 @@ public class RomanNumeral
 			}
 			i++;
 		}
+	}
+
+	//returns number from roman numeral
+	public Integer getNumber()
+	{
 		return number;
 	}
 
 	//returns roman numeral from number
 	public String toString()
 	{
-		roman = "";
-		for (int i = 0; i < NUMBERS.length; i++) //finds roman numeral
-		{
-			while (NUMBERS[i] <= number)
-			{
-				roman += LETTERS[i];
-				number -= NUMBERS[i];
-			}
-		}
 		return roman + "\n";
 	}
 }
