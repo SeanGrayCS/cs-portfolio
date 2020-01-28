@@ -1,14 +1,19 @@
-//(c) A+ Computer Science
-//www.apluscompsci.com
-//Name - Sean Gray
-
+/**
+ * RomanNumeralRunner.java 1/28/20
+ *
+ * @author - Sean Gray
+ * @author - Period 1
+ * @author - Id 902073
+ *
+ */
 import static java.lang.System.*;
 
 public class RomanNumeralRunner
 {
-	public static void main( String args[] )
+	public static void main(String[] args)
 	{
-		RomanNumeral test = new RomanNumeral(10);
+		RomanNumeral test = new RomanNumeral(10); //defines RomanNumeral object
+		//test cases
 		out.println("10 is " + test.toString());
 
 		test.setNumber(100);
@@ -32,7 +37,8 @@ public class RomanNumeralRunner
 		test.setNumber(49);
 		out.println("49 is " + test.toString());
 
-		test.setRoman("LXXVII");
+		test.setRoman("LXXVII"); //sets object with a Roman Numeral
+		//test cases
 		out.println("LXXVII is " + test.getNumber() + "\n");
 
 		test.setRoman("XLIX");
