@@ -1,8 +1,8 @@
 /**
- * @(#)BasicDerivativeCalc.java
- *
+ * BasicDerivativeCalc.java
  *
  * @author Sean Gray
+ * 
  * @version 1.04 2019/10/2
  */
 

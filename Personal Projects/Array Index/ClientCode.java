@@ -1,8 +1,8 @@
 /**
- * @(#)ClientCode.java
- *
+ * ClientCode.java
  *
  * @author Sean Gray
+ * 
  * @version 1.00 2020/01/13
  */
 

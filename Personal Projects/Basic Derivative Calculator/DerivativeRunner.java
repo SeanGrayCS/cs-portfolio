@@ -1,8 +1,8 @@
 /**
- * @(#)DerivativeRunner.java
- *
+ * DerivativeRunner.java
  *
  * @author Sean Gray
+ * 
  * @version 1.03 2019/9/27
  */
 

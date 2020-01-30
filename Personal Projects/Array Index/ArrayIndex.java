@@ -1,11 +1,10 @@
 /**
- * @(#)ArrayIndex.java
- *
+ * ArrayIndex.java
  *
  * @author Sean Gray
+ * 
  * @version 1.00 2020/1/13
  */
-
 
 public class ArrayIndex {
 
