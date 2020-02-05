@@ -13,7 +13,7 @@ public class ListTotal
 	public static int go(List<Integer> ray)
 	{
 		int total = 0;
-		for (Integer num : ray)
+		for (Integer num : ray) //sum each Integer num in List ray
 		{
 			total += num;
 		}
