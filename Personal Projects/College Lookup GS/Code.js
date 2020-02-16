@@ -3,15 +3,32 @@ function main() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var inSheet = ss.getSheetByName("Schools");
   var outSheet = ss.getSheetByName("Results");
+  var mapSheet = ss.getSheetByName("EduCollegeDataMapping");
+  
+  var fields = getFields(mapSheet);
+  var pretties = getPretties(mapSheet);
   
   var IDs = getIDs(inSheet);
-
-  var attributes = getAttributes(IDs);
   
-  outputResults(outSheet, attributes);
+  var attributes = getAttributes(IDs, fields);
+  
+  outputResults(outSheet, attributes, pretties);
   
 }
 
+//get the field names
+function getFields(mapSheet)
+{
+   return mapSheet.getRange("A2:A9").getValues();
+}
+
+//get the pretty names
+function getPretties(mapSheet)
+{
+  return mapSheet.getRange("B2:B9").getValues();
+}
+
+//get an array of IDs
 function getIDs(inSheet)
 {
   var IDs = inSheet.getRange("C2:C" + inSheet.getMaxRows()).getValues();
@@ -26,11 +43,10 @@ function getIDs(inSheet)
   return filteredIDs;
 }
 
-function getAttributes(IDs) {
+function getAttributes(IDs, fieldArr) {
   
   var attributes = [];
-  
-  var fields = "id,2017.admissions.sat_scores,school.men_only,school.city,school.state,2017.admissions.admission_rate.overall,school.name";
+  var fields = fieldArr.join(",");
   
   var IDString = IDs.join(",");
   var url = "https://api.data.gov/ed/collegescorecard/v1/schools.json"
@@ -43,17 +59,22 @@ function getAttributes(IDs) {
   var json = response.getContentText();
   var data = JSON.parse(json);
   var results = data.results;
+  
   for (var i = 0; i < results.length; i++)
   {
-    attributes.push([results[i]["id"], results[i]["school.name"], results[i]["school.city"], results[i]["school.state"], 
-                     results[i]["2017.admissions.admission_rate.overall"], results[i]["2017.admissions.sat_scores.average.overall"]]);
+    var resultArr = [];
+    for (var j = 0; j < fieldArr.length; j++)
+    {
+      resultArr.push(results[i][fieldArr[j]]);
+    }
+    attributes.push(resultArr);
   }
   return attributes;
 }
 
-function outputResults(outSheet, attributes) {
+function outputResults(outSheet, attributes, pretties) {
   outSheet.clear();
   var outArray = attributes.slice(0);
-  outArray.unshift(["School ID", "School Name", "School City", "School State", "Admission Rate", "Average SAT Score"]);
+  outArray.unshift(pretties);
   outSheet.getRange(1, 1, outArray.length, outArray[0].length).setValues(outArray);
 }
