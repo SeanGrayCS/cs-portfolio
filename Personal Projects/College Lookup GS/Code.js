@@ -1,7 +1,20 @@
+function main() {
+  
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var inSheet = ss.getSheetByName("Schools");
+  var outSheet = ss.getSheetByName("Results");
+  
+  var IDs = getIDs(inSheet);
+
+  var attributes = getAttributes(IDs);
+  
+  outputResults(outSheet, attributes);
+  
+}
+
 function getIDs(inSheet)
 {
-  var numRows = inSheet.getMaxRows();
-  return inSheet.getRange("C2:C" + numRows).getValues();
+  return inSheet.getRange("C2:C" + inSheet.getMaxRows()).getValues();
 }
 
 function getAttributes(IDs) {
@@ -26,12 +39,8 @@ function getAttributes(IDs) {
       
       var keys = Object.keys(data);
       
-      attributes.push(data.results[0]["school.name"]);
-      attributes.push(data.results[0]["school.city"]);
-      attributes.push(data.results[0]["school.state"]);
-      attributes.push(data.results[0]["id"]);
-      attributes.push(data.results[0]["2017.admissions.admission_rate.overall"]);
-      attributes.push(data.results[0]["2017.admissions.sat_scores.average.overall"]);
+      attributes.push([data.results[0]["id"], data.results[0]["school.name"], data.results[0]["school.city"], data.results[0]["school.state"], 
+                       data.results[0]["2017.admissions.admission_rate.overall"], data.results[0]["2017.admissions.sat_scores.average.overall"]]);
     }
   }
   return attributes;
@@ -39,37 +48,7 @@ function getAttributes(IDs) {
 
 function outputResults(outSheet, attributes) {
   outSheet.clear();
-  outSheet.getRange("A1").setValue("School Name");
-  outSheet.getRange("B1").setValue("School City");
-  outSheet.getRange("C1").setValue("School State");
-  outSheet.getRange("D1").setValue("School ID");
-  outSheet.getRange("E1").setValue("Admission Rate");
-  outSheet.getRange("F1").setValue("Average SAT Score");
-  var i = 0
-  var row = i + 2;
-  while (i < attributes.length)
-  {
-    outSheet.getRange("A" + row).setValue(attributes[i]);
-    outSheet.getRange("B" + row).setValue(attributes[i + 1]);
-    outSheet.getRange("C" + row).setValue(attributes[i + 2]);
-    outSheet.getRange("D" + row).setValue(attributes[i + 3]);
-    outSheet.getRange("E" + row).setValue(attributes[i + 4]);
-    outSheet.getRange("F" + row).setValue(attributes[i + 5]);
-    i += 6;
-    row++;
-  }
-}
-
-function main() {
-  
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var inSheet = ss.getSheetByName("Schools");
-  var outSheet = ss.getSheetByName("Results");
-  
-  var IDs = getIDs(inSheet);
-
-  var attributes = getAttributes(IDs);
-  
-  outputResults(outSheet, attributes);
-  
+  var outArray = attributes.slice(0);
+  outArray.unshift(["School ID", "School Name", "School City", "School State", "Admission Rate", "Average SAT Score"]);
+  outSheet.getRange(1, 1, outArray.length, outArray[0].length).setValues(outArray);
 }
