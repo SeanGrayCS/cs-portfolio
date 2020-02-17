@@ -19,13 +19,25 @@ function main() {
 //get the field names
 function getFields(mapSheet)
 {
-   return mapSheet.getRange("A2:A9").getValues();
+  var vals = mapSheet.getDataRange().getValues();
+  var fields = [];
+  for (var i = 1; i < vals.length; i++)
+  {
+    fields.push(vals[i][0]);
+  }
+  return fields;
 }
 
 //get the pretty names
 function getPretties(mapSheet)
 {
-  return mapSheet.getRange("B2:B9").getValues();
+  var vals = mapSheet.getDataRange().getValues();
+  var pretties = [];
+  for (var i = 1; i < vals.length; i++)
+  {
+    pretties.push(vals[i][1]);
+  }
+  return pretties;
 }
 
 //get an array of IDs
