@@ -1,5 +1,4 @@
 function main() {
-  
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var inSheet = ss.getSheetByName("Schools");
   var outSheet = ss.getSheetByName("Results");
@@ -12,8 +11,7 @@ function main() {
   
   var attributes = getAttributes(IDs, fields);
   
-  outputResults(outSheet, attributes, pretties);
-  
+  outputResults(outSheet, attributes, pretties);  
 }
 
 //get the field names
