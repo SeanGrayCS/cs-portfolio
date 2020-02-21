@@ -17,29 +17,23 @@ public class MyImage {
     	//int[][][] pixels = new int[1080][1920][4];
     	BufferedImage image = null;
     	File f = null;
-    	int a = 255;
-    	int r = 0;
-    	int g = 0;
-    	int b = 0;
-    	int pixel;
-    	
-		int w = 1920;
-		int h = 1080;
-    	image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		
+		try {
+			f = new File("C:\\Users\\gray_902073\\Desktop\\Image.jpg");
+			image = ImageIO.read(f);
+		} catch(IOException e) {
+			System.out.println("Error: "+e);
+		}
+		int w = image.getWidth();
+		int h = image.getHeight();
 		
 		for (int i = 0; i < h; i++)
 		{
 			for (int j = 0; j < w; j++)
 			{
-				pixel = a | (r<<i) | (g<<i<<j) | (b<<j);
-				image.setRGB(j, i, pixel);
-				g++;
-				r += 4;
-				b += 2;
+				int p = (image.getRGB(j,i)) ^ 0xffffffff;
+				image.setRGB(j, i, p);
 			}
-			r -= 200;
-			g -= 50;
-			b -= 100;
 		}
 		
 		try{
